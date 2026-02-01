@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For My Favorite Doctor ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Lora:ital,wght@1,600&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        :root { --med-red: #ff4757; --heart-pink: #ffafbd; }
+        body {
+            margin: 0; height: 100dvh; display: flex; justify-content: center; align-items: center;
+            background: #fff5f7; font-family: 'Poppins', sans-serif; overflow: hidden;
+        }
+        /* Heartbeat Line Animation */
+        .pulse-container {
+            position: absolute; top: 10%; width: 100%; height: 50px; opacity: 0.3;
+        }
+        .card {
+            background: white; width: 92%; max-width: 360px; padding: 25px;
+            border-radius: 30px; box-shadow: 0 20px 50px rgba(255, 71, 87, 0.2);
+            text-align: center; border: 1.5px solid #ffeef0; z-index: 10;
+        }
+        h1 { font-family: 'Dancing Script', cursive; color: var(--med-red); font-size: 2.2rem; margin: 10px 0; }
+        .shayari { 
+            font-family: 'Lora', serif; font-size: 1.1rem; color: #444; 
+            line-height: 1.6; margin: 20px 0; font-style: italic; border-left: 3px solid var(--med-red); padding-left: 10px;
+        }
+        .med-note { font-size: 0.8rem; color: #888; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+        .btn-group { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+        .btn {
+            padding: 15px; border-radius: 15px; border: none; font-weight: 600;
+            cursor: pointer; transition: 0.3s; font-size: 0.9rem;
+        }
+        .btn-primary { background: var(--med-red); color: white; box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4); }
+        .btn-outline { background: #fff1f2; color: var(--med-red); border: 1px solid var(--med-red); }
+        
+        #noBtn { position: fixed; z-index: 1000; padding: 10px 20px; border-radius: 10px; display: none; }
+        .stage { display: none; animation: slideUp 0.5s ease-out; }
+        .active { display: block; }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <div class="pulse-container">
+        <svg width="100%" height="100" viewBox="0 0 500 100">
+            <path d="M0 50 L100 50 L120 10 L140 90 L160 50 L500 50" fill="none" stroke="#ff4757" stroke-width="2">
+                <animate attributeName="stroke-dasharray" from="0,500" to="500,0" dur="3s" repeatCount="indefinite" />
+            </path>
+        </svg>
+    </div>
+
+    <div class="card">
+        <div class="stage active" id="stage1">
+            <div class="med-note">Clinical Observation #01</div>
+            <h1>Tanya, The Cure</h1>
+            <div class="shayari">"हज़ारों ख़्वाहिशें ऐसी कि हर ख़्वाहिश पे दम निकले,<br>बहुत निकले मिरे अरमान लेकिन फिर भी कम निकले।" - Ghalib</div>
+            <p>Tumhara face dekh kar mera <b>Cortisol</b> level drop ho jata hai. Tum sirf doctor nahi, meri healing ho.</p>
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="showNext(2)">Check My Heart Rate 💓</button>
+            </div>
+        </div>
+
+        <div class="stage" id="stage2">
+            <div class="med-note">Vital Signs: Critical</div>
+            <h1>Sinus Tachycardia!</h1>
+            <div class="shayari">"ये इश्क़ नहीं आसां इतना ही समझ लीजे,<br>इक आग का दरिया है और डूब के जाना है।" - Jigar Moradabadi</div>
+            <p>Tanya, jab tum pass hoti ho (chahe video call par hi sahi), mera heart rate 150 BPM touch kar jata hai. Iska koi ilaaj hai doctor sahiba?</p>
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="showNext(3)">View Treatment Plan ✨</button>
+                <button class="btn btn-outline" onclick="triggerDrama()">Consultation Cancel ❌</button>
+            </div>
+        </div>
+
+        <div class="stage" id="stage3">
+            <div class="med-note">Report: Pure Perfection</div>
+            <h1>Uski Taarif...</h1>
+            <div class="shayari">"तेरी आँखों के सिवा दुनिया में रक्खा क्या है,<br>ये उठें सुबह चले ये झुकें शाम ढले।" - Faiz</div>
+            <p>Medical books mein 'Perfect Anatomy' likha hoga, par unhone tumhari aankhen aur wo smile nahi dekhi. You are the <b>Dopamine</b> to my grey life.</p>
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="showNext(4)">I am falling for you again... ❤️</button>
+            </div>
+        </div>
+
+        <div class="stage" id="stage4">
+            <div class="med-note">Final Prognosis: Forever</div>
+            <h1>Venture into My Heart</h1>
+            <p>Log kahte hain 'Love is a Chemical Reaction', main kahta hoon 'Love is TANYA'. Door reh kar bhi tum meri <b>Vagus Nerve</b> ki tarah mujhse judi ho.</p>
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="celebrate()">I Love You, My Doctor! 👩‍⚕️</button>
+                <button class="btn btn-outline" onclick="triggerDrama()">Re-evaluate Feelings 🧐</button>
+            </div>
+        </div>
+    </div>
+
+    <button id="noBtn" onmouseover="moveBtn()" ontouchstart="moveBtn()">Refuse Prescription 💔</button>
+
+    <script>
+        function showNext(n) {
+            document.querySelectorAll('.stage').forEach(s => s.classList.remove('active'));
+            document.getElementById('stage' + n).classList.add('active');
+            document.getElementById('noBtn').style.display = 'none';
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.8 } });
+        }
+
+        function triggerDrama() {
+            const noBtn = document.getElementById('noBtn');
+            noBtn.style.display = 'block';
+            noBtn.style.top = '80%';
+            noBtn.style.left = '50%';
+            noBtn.innerText = "Error: System Crash! 😭";
+            alert("Warning: Critical Heart Failure detected! Please don't click the negative button!");
+        }
+
+        function moveBtn() {
+            const btn = document.getElementById('noBtn');
+            btn.innerText = "Can't Click Me! 😂";
+            btn.style.left = Math.random() * (window.innerWidth - 120) + 'px';
+            btn.style.top = Math.random() * (window.innerHeight - 50) + 'px';
+        }
+
+        function celebrate() {
+            confetti({ particleCount: 400, spread: 150, origin: { y: 0.6 } });
+            document.querySelector('.card').innerHTML = `
+                <div style="font-size:50px">👨‍💻❤️👩‍⚕️</div>
+                <h1>Successful Operation!</h1>
+                <p class="shayari">"तुम आए तो लगा जैसे सांस आई... <br> वरना ये दिल बस धड़क रहा था।"</p>
+                <p>I love you more than words, code, or medicine can explain. You are my forever! ♾️</p>
+            `;
+        }
+    </script>
+</body>
+</html>
