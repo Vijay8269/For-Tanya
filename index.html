@@ -1,134 +1,1254 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>For My Favorite Doctor ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Lora:ital,wght@1,600&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-    <style>
-        :root { --med-red: #ff4757; --heart-pink: #ffafbd; }
-        body {
-            margin: 0; height: 100dvh; display: flex; justify-content: center; align-items: center;
-            background: #fff5f7; font-family: 'Poppins', sans-serif; overflow: hidden;
-        }
-        /* Heartbeat Line Animation */
-        .pulse-container {
-            position: absolute; top: 10%; width: 100%; height: 50px; opacity: 0.3;
-        }
-        .card {
-            background: white; width: 92%; max-width: 360px; padding: 25px;
-            border-radius: 30px; box-shadow: 0 20px 50px rgba(255, 71, 87, 0.2);
-            text-align: center; border: 1.5px solid #ffeef0; z-index: 10;
-        }
-        h1 { font-family: 'Dancing Script', cursive; color: var(--med-red); font-size: 2.2rem; margin: 10px 0; }
-        .shayari { 
-            font-family: 'Lora', serif; font-size: 1.1rem; color: #444; 
-            line-height: 1.6; margin: 20px 0; font-style: italic; border-left: 3px solid var(--med-red); padding-left: 10px;
-        }
-        .med-note { font-size: 0.8rem; color: #888; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
-        .btn-group { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
-        .btn {
-            padding: 15px; border-radius: 15px; border: none; font-weight: 600;
-            cursor: pointer; transition: 0.3s; font-size: 0.9rem;
-        }
-        .btn-primary { background: var(--med-red); color: white; box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4); }
-        .btn-outline { background: #fff1f2; color: var(--med-red); border: 1px solid var(--med-red); }
-        
-        #noBtn { position: fixed; z-index: 1000; padding: 10px 20px; border-radius: 10px; display: none; }
-        .stage { display: none; animation: slideUp 0.5s ease-out; }
-        .active { display: block; }
-        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>For Tanya — I'm Truly, Deeply Sorry</title>
+
+  <!-- Google Fonts: Cormorant Garamond (Editorial Serif) + Plus Jakarta Sans (Warm Clean Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* ==========================================================================
+       CUSTOM ATMOSPHERE & NIGHT-TO-DAWN STAGE TRANSITIONS
+       ========================================================================== */
+    :root {
+      --bg-top: #0b0812;
+      --bg-mid: #171024;
+      --bg-bot: #221429;
+      --text-primary: #f7efe8;
+      --text-secondary: #cbb9c4;
+      --accent-glow: rgba(244, 179, 147, 0.28);
+      --card-bg: rgba(255, 255, 255, 0.055);
+      --card-border: rgba(255, 224, 210, 0.16);
+    }
+
+    /* Stage 1: Twilight / Storm Clearing */
+    body.stage-1 {
+      --bg-top: #140e1f;
+      --bg-mid: #28172b;
+      --bg-bot: #3d1f33;
+      --text-primary: #fbf2ec;
+      --text-secondary: #dcc6cf;
+      --accent-glow: rgba(246, 173, 142, 0.34);
+      --card-bg: rgba(255, 240, 235, 0.07);
+      --card-border: rgba(255, 214, 198, 0.22);
+    }
+
+    /* Stage 2: Warm Rose-Gold & Candlelight Letter */
+    body.stage-2 {
+      --bg-top: #261424;
+      --bg-mid: #472234;
+      --bg-bot: #6e3542;
+      --text-primary: #fff7f2;
+      --text-secondary: #f2d8d5;
+      --accent-glow: rgba(253, 198, 158, 0.42);
+      --card-bg: rgba(255, 248, 242, 0.1);
+      --card-border: rgba(255, 223, 200, 0.3);
+    }
+
+    /* Stage 3: Soft Dawn, Blush & Golden Peace */
+    body.stage-3 {
+      --bg-top: #381b2c;
+      --bg-mid: #6b3343;
+      --bg-bot: #a6575c;
+      --text-primary: #fffaf6;
+      --text-secondary: #fbe5e0;
+      --accent-glow: rgba(255, 218, 175, 0.52);
+      --card-bg: rgba(255, 250, 245, 0.13);
+      --card-border: rgba(255, 232, 214, 0.38);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      width: 100%;
+      overflow-x: hidden;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--text-primary);
+      background: linear-gradient(165deg, var(--bg-top) 0%, var(--bg-mid) 52%, var(--bg-bot) 100%);
+      transition: background 1.8s cubic-bezier(0.22, 1, 0.36, 1), color 1.2s ease;
+    }
+
+    /* Persistent Ambient Background Layer for Smooth Crossfade */
+    .ambient-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 20% 18%, rgba(235, 152, 134, 0.14) 0%, transparent 48%),
+        radial-gradient(circle at 82% 78%, rgba(246, 189, 138, 0.16) 0%, transparent 52%),
+        radial-gradient(circle at 50% 50%, rgba(255, 224, 205, 0.05) 0%, transparent 68%);
+      transition: opacity 1.5s ease;
+    }
+
+    #particle-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Glassmorphic Card Styling */
+    .glass-panel {
+      background: var(--card-bg);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--card-border);
+      box-shadow:
+        0 20px 50px rgba(7, 4, 14, 0.32),
+        inset 0 1px 0 rgba(255, 255, 255, 0.14);
+      transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Warm Glowing CTA Button */
+    .glow-btn {
+      position: relative;
+      background: linear-gradient(135deg, #f3b59b 0%, #e58e8a 52%, #d8747c 100%);
+      color: #1c0f18;
+      font-weight: 600;
+      box-shadow:
+        0 10px 30px rgba(229, 142, 138, 0.34),
+        0 0 0 1px rgba(255, 240, 232, 0.45) inset;
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease, filter 0.3s ease;
+    }
+
+    .glow-btn:hover {
+      transform: translateY(-2px) scale(1.015);
+      box-shadow:
+        0 16px 38px rgba(235, 152, 142, 0.48),
+        0 0 0 1px rgba(255, 248, 242, 0.65) inset;
+      filter: brightness(1.04);
+    }
+
+    .glow-btn:active {
+      transform: translateY(1px) scale(0.985);
+    }
+
+    /* Gentle Breathing Halo behind Hero Elements */
+    @keyframes breathe {
+      0%, 100% {
+        transform: scale(0.96);
+        opacity: 0.45;
+      }
+      50% {
+        transform: scale(1.08);
+        opacity: 0.8;
+      }
+    }
+
+    .breathing-orb {
+      animation: breathe 6.5s ease-in-out infinite;
+    }
+
+    /* Stage Visibility Transitions */
+    .stage-section {
+      display: none;
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1), transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .stage-section.active {
+      display: flex;
+    }
+
+    .stage-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Dissolvable Hurt Cards */
+    .hurt-card {
+      position: relative;
+      cursor: pointer;
+      user-select: none;
+      transition:
+        transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+        background 0.6s ease,
+        border-color 0.6s ease,
+        box-shadow 0.6s ease;
+    }
+
+    .hurt-card:hover:not(.healed) {
+      transform: translateY(-3px);
+      border-color: rgba(255, 214, 190, 0.42);
+      box-shadow: 0 14px 34px rgba(244, 179, 147, 0.16);
+    }
+
+    .hurt-card.dissolving {
+      transform: scale(0.96);
+      filter: blur(2px);
+    }
+
+    .hurt-card.healed {
+      cursor: default;
+      background: linear-gradient(135deg, rgba(255, 224, 198, 0.15) 0%, rgba(244, 170, 158, 0.12) 100%);
+      border-color: rgba(255, 222, 194, 0.45);
+      box-shadow: 0 10px 30px rgba(248, 192, 152, 0.16);
+    }
+
+    /* Letter Paper Subtle Texture & Scroll */
+    .letter-card {
+      background: linear-gradient(
+        180deg,
+        rgba(255, 249, 244, 0.11) 0%,
+        rgba(255, 238, 228, 0.07) 100%
+      );
+      border: 1px solid rgba(255, 228, 210, 0.28);
+    }
+
+    /* Prescription Card Styling */
+    .rx-card {
+      background: linear-gradient(145deg, rgba(255, 251, 247, 0.95) 0%, rgba(252, 237, 230, 0.93) 100%);
+      color: #2b1722;
+      border: 1px solid rgba(235, 176, 160, 0.55);
+      box-shadow:
+        0 25px 60px rgba(24, 9, 18, 0.42),
+        0 0 40px rgba(255, 214, 186, 0.35);
+    }
+
+    /* Custom Subtle Scrollbar */
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 220, 205, 0.24);
+      border-radius: 9999px;
+    }
+
+    /* Floating Heart Pop Animation */
+    @keyframes floatUpFade {
+      0% {
+        opacity: 0;
+        transform: translateY(10px) scale(0.7);
+      }
+      20% {
+        opacity: 1;
+        transform: translateY(-6px) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-75px) scale(1.15);
+      }
+    }
+
+    .floating-heart {
+      position: fixed;
+      pointer-events: none;
+      z-index: 60;
+      animation: floatUpFade 2.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+  </style>
 </head>
-<body>
 
-    <div class="pulse-container">
-        <svg width="100%" height="100" viewBox="0 0 500 100">
-            <path d="M0 50 L100 50 L120 10 L140 90 L160 50 L500 50" fill="none" stroke="#ff4757" stroke-width="2">
-                <animate attributeName="stroke-dasharray" from="0,500" to="500,0" dur="3s" repeatCount="indefinite" />
-            </path>
-        </svg>
+<body class="stage-0 antialiased selection:bg-rose-200/30 selection:text-rose-100">
+  <!-- Ambient Glow & Interactive Firefly/Petal Canvas -->
+  <div class="ambient-backdrop"></div>
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- Top Minimal Header: Stage Indicator & Sound Toggle -->
+  <header class="fixed top-0 left-0 right-0 z-40 px-4 sm:px-8 py-4 flex items-center justify-between pointer-events-none">
+    <!-- Subtle Progress Dots -->
+    <div class="pointer-events-auto flex items-center gap-2 px-3.5 py-2 rounded-full bg-black/20 backdrop-blur-md border border-white/10">
+      <button onclick="goToStage(0)" aria-label="Chapter 1" id="dot-0" class="w-2.5 h-2.5 rounded-full bg-rose-200 transition-all duration-500 scale-110"></button>
+      <button onclick="goToStage(1)" aria-label="Chapter 2" id="dot-1" class="w-2 h-2 rounded-full bg-white/25 hover:bg-white/50 transition-all duration-500"></button>
+      <button onclick="goToStage(2)" aria-label="Chapter 3" id="dot-2" class="w-2 h-2 rounded-full bg-white/25 hover:bg-white/50 transition-all duration-500"></button>
+      <button onclick="goToStage(3)" aria-label="Chapter 4" id="dot-3" class="w-2 h-2 rounded-full bg-white/25 hover:bg-white/50 transition-all duration-500"></button>
+      <span id="chapter-label" class="ml-1.5 text-[11px] uppercase tracking-[0.18em] text-rose-100/75 font-medium hidden sm:inline">
+        I. The Quiet
+      </span>
     </div>
 
-    <div class="card">
-        <div class="stage active" id="stage1">
-            <div class="med-note">Clinical Observation #01</div>
-            <h1>Tanya, The Cure</h1>
-            <div class="shayari">"हज़ारों ख़्वाहिशें ऐसी कि हर ख़्वाहिश पे दम निकले,<br>बहुत निकले मिरे अरमान लेकिन फिर भी कम निकले।" - Ghalib</div>
-            <p>Tumhara face dekh kar mera <b>Cortisol</b> level drop ho jata hai. Tum sirf doctor nahi, meri healing ho.</p>
-            <div class="btn-group">
-                <button class="btn btn-primary" onclick="showNext(2)">Check My Heart Rate 💓</button>
-            </div>
+    <!-- Ambient Piano / Chime Sound Toggle -->
+    <button
+      id="sound-toggle"
+      onclick="toggleAudio()"
+      class="pointer-events-auto flex items-center gap-2 px-4 py-2 rounded-full bg-rose-950/50 hover:bg-rose-900/60 backdrop-blur-md border border-rose-200/25 text-xs text-rose-100 shadow-lg transition-all duration-300 cursor-pointer"
+      title="Toggle gentle music-box lullaby"
+    >
+      <span id="sound-icon" class="text-sm">🎵</span>
+      <span id="sound-text" class="tracking-wide font-medium">Play Soft Melody 🎵</span>
+    </button>
+  </header>
+
+  <!-- Main Interactive Container -->
+  <main class="relative z-10 min-h-screen w-full flex flex-col items-center justify-center px-4 sm:px-6 py-20">
+
+    <!-- ======================================================================
+         STAGE 0: THE PAUSE / THE QUIET AFTER THE STORM
+         ====================================================================== -->
+    <section id="stage-0" class="stage-section active visible w-full max-w-xl flex-col items-center text-center">
+      <!-- Breathing Warm Light Halo -->
+      <div class="relative mb-7 flex items-center justify-center">
+        <div class="breathing-orb absolute w-28 h-28 rounded-full bg-rose-300/25 blur-2xl"></div>
+        <div class="relative w-16 h-16 rounded-full glass-panel flex items-center justify-center text-2xl shadow-lg">
+          🕯️
+        </div>
+      </div>
+
+      <p class="text-xs sm:text-sm uppercase tracking-[0.26em] text-rose-200/75 mb-3 font-medium">
+        Jab gussa thoda shant ho jaaye, aur aap thak kar baitho…
+      </p>
+
+      <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight leading-[1.12] text-rose-50 mb-5">
+        For <span class="italic font-normal text-rose-200">Tanya</span>
+      </h1>
+
+      <div class="glass-panel rounded-3xl p-6 sm:p-8 mb-8 text-center">
+        <p class="font-serif text-xl sm:text-2xl leading-relaxed text-rose-50/95 mb-4">
+          “Gusse mein kahe hue alfaaz kabhi dil ki zubaan nahi hote…”
+        </p>
+        <p class="text-sm sm:text-base leading-relaxed text-rose-100/85 font-light">
+          I know aap mujhse bahut zyada naraz ho aur aapka dil dukha hai—and you have every single right to be upset.
+          We both spoke in anger, and I regret every harsh word that left my mouth. Winning an argument means nothing to me when
+          <span class="text-rose-200 font-medium">the only person I ever want in my life is you</span>.
+        </p>
+      </div>
+
+      <button
+        onclick="startJourney()"
+        class="glow-btn rounded-full px-8 py-4 text-sm sm:text-base tracking-wide flex items-center gap-3 cursor-pointer"
+      >
+        <span>Kuch baatein jo main aapse kehna chahta hoon</span>
+        <span aria-hidden="true">→</span>
+      </button>
+
+      <p class="mt-4 text-xs text-rose-200/55">
+        No excuses. No blame. Just an honest apology from my heart.
+      </p>
+    </section>
+
+    <!-- ======================================================================
+         STAGE 1: INTERACTIVE "UNSAID & REGRETTED WORDS" DISSOLVE MECHANIC
+         ====================================================================== -->
+    <section id="stage-1" class="stage-section w-full max-w-2xl flex-col items-center text-center">
+      <p class="text-xs uppercase tracking-[0.24em] text-rose-200/75 mb-2 font-medium">
+        Owning my mistakes completely
+      </p>
+
+      <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-semibold text-rose-50 mb-3">
+        Jo Gusse Mein Kaha, Woh Kabhi Sach Nahi Tha
+      </h2>
+
+      <p class="text-sm sm:text-base text-rose-100/80 max-w-lg mb-6 font-light">
+        Tap each heavy regret below to dissolve the hurt and read what I truly carry in my heart for you.
+      </p>
+
+      <!-- Storm Clearing Progress Bar -->
+      <div class="w-full max-w-md mb-7">
+        <div class="flex justify-between text-xs text-rose-200/80 mb-2 px-1">
+          <span id="heal-status-text">4 heavy regrets left to clear</span>
+          <span id="heal-count">0 / 4</span>
+        </div>
+        <div class="w-full h-2 rounded-full bg-white/10 overflow-hidden p-0.5 border border-white/10">
+          <div
+            id="heal-progress-bar"
+            class="h-full rounded-full bg-gradient-to-r from-rose-300 via-amber-200 to-rose-200 transition-all duration-700 ease-out"
+            style="width: 0%;"
+          ></div>
+        </div>
+      </div>
+
+      <!-- 4 Interactive Dissolve Cards -->
+      <div id="hurt-cards-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full mb-8 text-left">
+        <!-- Card 1: Mere kadwe lafz -->
+        <div
+          onclick="dissolveCard(this, 0)"
+          class="hurt-card glass-panel rounded-2xl p-5 sm:p-6 flex flex-col justify-between min-h-[168px]"
+          data-healed="false"
+        >
+          <div class="flex items-center justify-between mb-3">
+            <span class="card-badge text-[11px] uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/10 text-rose-200/80">
+              Mere kadwe lafz · Tap
+            </span>
+            <span class="card-icon text-lg opacity-80">🌧️</span>
+          </div>
+          <p class="card-text font-serif text-xl sm:text-[21px] leading-snug text-rose-50">
+            “Gussey mein maine aapko jo bhi ulta-seedha kaha, mujhe uska dil se afsos hai. Aap uske layak bilkul nahi thi.”
+          </p>
         </div>
 
-        <div class="stage" id="stage2">
-            <div class="med-note">Vital Signs: Critical</div>
-            <h1>Sinus Tachycardia!</h1>
-            <div class="shayari">"ये इश्क़ नहीं आसां इतना ही समझ लीजे,<br>इक आग का दरिया है और डूब के जाना है।" - Jigar Moradabadi</div>
-            <p>Tanya, jab tum pass hoti ho (chahe video call par hi sahi), mera heart rate 150 BPM touch kar jata hai. Iska koi ilaaj hai doctor sahiba?</p>
-            <div class="btn-group">
-                <button class="btn btn-primary" onclick="showNext(3)">View Treatment Plan ✨</button>
-                <button class="btn btn-outline" onclick="triggerDrama()">Consultation Cancel ❌</button>
-            </div>
+        <!-- Card 2: Aapki thakan aur padhai -->
+        <div
+          onclick="dissolveCard(this, 1)"
+          class="hurt-card glass-panel rounded-2xl p-5 sm:p-6 flex flex-col justify-between min-h-[168px]"
+          data-healed="false"
+        >
+          <div class="flex items-center justify-between mb-3">
+            <span class="card-badge text-[11px] uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/10 text-rose-200/80">
+              Aapki thakan aur padhai · Tap
+            </span>
+            <span class="card-icon text-lg opacity-80">📚</span>
+          </div>
+          <p class="card-text font-serif text-xl sm:text-[21px] leading-snug text-rose-50">
+            “Aap pehle hi apni medical studies aur exams ke pressure se thaki hui hoti ho, aur maine aapka sukoon chheen liya.”
+          </p>
         </div>
 
-        <div class="stage" id="stage3">
-            <div class="med-note">Report: Pure Perfection</div>
-            <h1>Uski Taarif...</h1>
-            <div class="shayari">"तेरी आँखों के सिवा दुनिया में रक्खा क्या है,<br>ये उठें सुबह चले ये झुकें शाम ढले।" - Faiz</div>
-            <p>Medical books mein 'Perfect Anatomy' likha hoga, par unhone tumhari aankhen aur wo smile nahi dekhi. You are the <b>Dopamine</b> to my grey life.</p>
-            <div class="btn-group">
-                <button class="btn btn-primary" onclick="showNext(4)">I am falling for you again... ❤️</button>
-            </div>
+        <!-- Card 3: Meri ego -->
+        <div
+          onclick="dissolveCard(this, 2)"
+          class="hurt-card glass-panel rounded-2xl p-5 sm:p-6 flex flex-col justify-between min-h-[168px]"
+          data-healed="false"
+        >
+          <div class="flex items-center justify-between mb-3">
+            <span class="card-badge text-[11px] uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/10 text-rose-200/80">
+              Meri ego · Tap
+            </span>
+            <span class="card-icon text-lg opacity-80">🥀</span>
+          </div>
+          <p class="card-text font-serif text-xl sm:text-[21px] leading-snug text-rose-50">
+            “Baat jeetne ke chakkar mein main yeh bhool gaya ki aapse haar jaana hi meri sabse badi jeet hai.”
+          </p>
         </div>
 
-        <div class="stage" id="stage4">
-            <div class="med-note">Final Prognosis: Forever</div>
-            <h1>Venture into My Heart</h1>
-            <p>Log kahte hain 'Love is a Chemical Reaction', main kahta hoon 'Love is TANYA'. Door reh kar bhi tum meri <b>Vagus Nerve</b> ki tarah mujhse judi ho.</p>
-            <div class="btn-group">
-                <button class="btn btn-primary" onclick="celebrate()">I Love You, My Doctor! 👩‍⚕️</button>
-                <button class="btn btn-outline" onclick="triggerDrama()">Re-evaluate Feelings 🧐</button>
-            </div>
+        <!-- Card 4: Aapka dil dukhana -->
+        <div
+          onclick="dissolveCard(this, 3)"
+          class="hurt-card glass-panel rounded-2xl p-5 sm:p-6 flex flex-col justify-between min-h-[168px]"
+          data-healed="false"
+        >
+          <div class="flex items-center justify-between mb-3">
+            <span class="card-badge text-[11px] uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/10 text-rose-200/80">
+              Aapka dil dukhana · Tap
+            </span>
+            <span class="card-icon text-lg opacity-80">🌑</span>
+          </div>
+          <p class="card-text font-serif text-xl sm:text-[21px] leading-snug text-rose-50">
+            “Jis insaan ko main sabse zyada khush dekhna chahta hoon, aaj usi ki aankhon mein meri wajah se nami aayi.”
+          </p>
         </div>
-    </div>
+      </div>
 
-    <button id="noBtn" onmouseover="moveBtn()" ontouchstart="moveBtn()">Refuse Prescription 💔</button>
+      <!-- Continue Button -->
+      <div class="flex flex-col items-center gap-3">
+        <button
+          id="to-letter-btn"
+          onclick="goToStage(2)"
+          class="glow-btn rounded-full px-8 py-3.5 text-sm sm:text-base opacity-50 pointer-events-none transition-all duration-500 flex items-center gap-2.5"
+        >
+          <span>Read My Letter For You</span>
+          <span>💌</span>
+        </button>
+        <button
+          id="skip-to-letter-hint"
+          onclick="dissolveAllRemaining()"
+          class="text-xs text-rose-200/55 hover:text-rose-200/90 underline underline-offset-4 transition-colors cursor-pointer"
+        >
+          Dissolve all regrets gently
+        </button>
+      </div>
+    </section>
 
-    <script>
-        function showNext(n) {
-            document.querySelectorAll('.stage').forEach(s => s.classList.remove('active'));
-            document.getElementById('stage' + n).classList.add('active');
-            document.getElementById('noBtn').style.display = 'none';
-            confetti({ particleCount: 100, spread: 70, origin: { y: 0.8 } });
+    <!-- ======================================================================
+         STAGE 2: A HEARTFELT LETTER TO TANYA
+         ====================================================================== -->
+    <section id="stage-2" class="stage-section w-full max-w-2xl flex-col items-center">
+      <div class="text-center mb-6">
+        <p class="text-xs uppercase tracking-[0.24em] text-rose-200/80 mb-2 font-medium">
+          Dil ki gehraai se, sirf aapke liye
+        </p>
+        <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-semibold text-rose-50">
+          Meri Pyaari Tanya,
+        </h2>
+      </div>
+
+      <article class="glass-panel letter-card rounded-3xl p-6 sm:p-10 mb-8 space-y-5 text-rose-50/95 leading-relaxed text-[15px] sm:text-base font-light shadow-2xl">
+        <p class="font-serif text-xl sm:text-2xl italic text-rose-200">
+          I am genuinely, deeply sorry, Tanya. Gussey mein maine aapka dil dukhaya, aur mujhe apni har us baat ka afsos hai…
+        </p>
+
+        <p>
+          Main jaanta hoon aap mujhse bahut zyada naraz ho—aur sach kahoon toh aapka gussa bilkul jayaz hai.
+          Hum dono ne gusse mein bahut kuch ulta-seedha bol diya, par mujhe is baat ka sabse zyada dard hai ki meri baaton se aapko takleef pahunchi. Without a single “if” or “but”, I own my mistakes completely.
+        </p>
+
+        <p>
+          Aap din-raat itni mehnat kar rahi ho taaki ek din doctor ban sako. Aapki neend, aapki padhai, aapka stress — <span class="text-rose-200 font-normal">mujhe aapka sahara banna chahiye tha, aapki takleef nahi.</span>
+        </p>
+
+        <blockquote class="border-l-2 border-rose-300/60 pl-4 py-1 my-4 font-serif italic text-lg sm:text-xl text-amber-100/95">
+          “Mujhe kisi baat par right prove nahi hona. Mujhe sirf aap chahiye…<br class="hidden sm:inline" />
+          Aap mere liye sirf ek naam nahi ho, aap meri sukoon ki jagah ho.”
+        </blockquote>
+
+        <p>
+          Agar aap abhi bhi naraz ho, toh main intezar karunga. Bas itna yaad rakhna — <span class="text-rose-200 font-medium">har gusse, har jhagde ke baad bhi, main hamesha aapke saath khada hoon.</span>
+        </p>
+
+        <div class="pt-3 flex items-center justify-between border-t border-white/15">
+          <div>
+            <p class="font-serif italic text-xl text-rose-200">Hamesha aapka,</p>
+            <p class="text-xs uppercase tracking-[0.2em] text-rose-100/70 mt-0.5">Waiting quietly for your smile</p>
+          </div>
+          <span class="text-2xl">🕯️🤍</span>
+        </div>
+      </article>
+
+      <button
+        onclick="goToStage(3)"
+        class="glow-btn rounded-full px-8 py-4 text-sm sm:text-base flex items-center gap-2.5 cursor-pointer"
+      >
+        <span>Ek Aakhri Guzaarish...</span>
+        <span>🤍</span>
+      </button>
+    </section>
+
+    <!-- ======================================================================
+         STAGE 3: HEARTFELT PLEA TO TALK & FIX THINGS
+         ====================================================================== -->
+    <section id="stage-3" class="stage-section w-full max-w-xl flex-col items-center text-center">
+      <!-- Pre-Forgiveness Question Card -->
+      <div id="question-box" class="glass-panel rounded-3xl p-7 sm:p-10 w-full transition-all duration-700">
+        <div class="w-16 h-16 mx-auto mb-5 rounded-full bg-rose-200/15 border border-rose-200/30 flex items-center justify-center text-3xl shadow-inner">
+          🤍
+        </div>
+
+        <p class="text-xs uppercase tracking-[0.24em] text-rose-200/80 mb-2 font-medium">
+          Dil se maafi
+        </p>
+
+        <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-semibold text-rose-50 mb-4 leading-tight">
+          Kya aap mujhe maaf karke<br />
+          <span class="italic font-normal text-rose-200">ek nayi shuruat karogi?</span>
+        </h2>
+
+        <p id="playful-reassurance" class="text-sm sm:text-base text-rose-100/85 min-h-[54px] flex items-center justify-center mb-7 font-light px-2 transition-all duration-300 leading-relaxed">
+          Aapke bina sab adhoora sa lagta hai, Tanya... Aap jitna chahe daant lena, bas mujhse door mat jaana.
+        </p>
+
+        <!-- Action Buttons -->
+        <div class="relative flex flex-col sm:flex-row items-center justify-center gap-4 min-h-[110px] sm:min-h-[64px]">
+          <button
+            id="forgive-yes-btn"
+            onclick="acceptApology()"
+            class="glow-btn rounded-full px-7 py-4 text-sm sm:text-base w-full sm:w-auto cursor-pointer z-10"
+          >
+            Haan, baat karte hain ❤️
+          </button>
+
+          <button
+            id="still-mad-btn"
+            onclick="handleStillMad()"
+            class="rounded-full px-6 py-3.5 text-xs sm:text-sm bg-white/10 hover:bg-white/15 border border-white/20 text-rose-100/90 transition-all duration-300 w-full sm:w-auto cursor-pointer"
+          >
+            Thoda aur manao 🥺
+          </button>
+        </div>
+      </div>
+
+      <!-- Post-Forgiveness Finale: "A Promise to My Future Doctor" Card -->
+      <div id="finale-rx-box" class="hidden opacity-0 transform translate-y-6 transition-all duration-1000 w-full">
+        <div class="rx-card rounded-3xl p-6 sm:p-9 text-left relative overflow-hidden">
+          <!-- Decorative Watermark -->
+          <div class="absolute -right-4 -bottom-6 text-8xl opacity-[0.07] select-none pointer-events-none font-serif font-bold">
+            ♡
+          </div>
+
+          <!-- Header -->
+          <div class="flex items-start justify-between border-b border-rose-900/15 pb-4 mb-5">
+            <div>
+              <span class="text-[11px] uppercase tracking-[0.22em] text-rose-700/80 font-semibold">
+                My Promise For Always
+              </span>
+              <h3 class="font-serif text-2xl sm:text-3xl font-bold text-rose-950 mt-0.5">
+                For My Future Doctor, Tanya ❤️
+              </h3>
+            </div>
+            <div class="w-11 h-11 rounded-2xl bg-rose-500/15 border border-rose-500/25 flex items-center justify-center text-xl text-rose-800">
+              🩺
+            </div>
+          </div>
+
+          <!-- Sincere Promises -->
+          <ul class="space-y-3.5 text-sm sm:text-[15px] text-rose-950/90 mb-6">
+            <li class="flex items-start gap-3">
+              <span class="text-rose-600 font-bold mt-0.5">01.</span>
+              <span><strong>Aapki Izzat Sabse Pehle:</strong> Main wada karta hoon ki gusse mein bhi kabhi aapki izzat aur aapke dil ko thes nahi pahunchaunga.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-rose-600 font-bold mt-0.5">02.</span>
+              <span><strong>Aapka Sahara Banunga:</strong> Aapki medical studies aur har mushkil waqt mein aapki taqat banunga, aapka stress nahi.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-rose-600 font-bold mt-0.5">03.</span>
+              <span><strong>Hamesha Aapko Sununga:</strong> Kisi bhi behas se zyada zaroori mere liye aapki khushi aur aapke jazbaat rahenge.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-rose-600 font-bold mt-0.5">04.</span>
+              <span><strong>Hamesha Aapke Saath:</strong> Chahe jitne bhi jhagde hon, din ke aakhir mein hamesha aapka haath thaam kar rakhunga.</span>
+            </li>
+          </ul>
+
+          <!-- Footer Note -->
+          <div class="bg-rose-950/[0.05] rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 border border-rose-900/10">
+            <p class="font-serif italic text-base sm:text-lg text-rose-900 text-center sm:text-left">
+              “Thank you for forgiving me, Tanya. Jab aapka mann kare, mujhe call ya text zaroor karna.”
+            </p>
+            <button
+              onclick="sendMoreLoveBurst()"
+              class="shrink-0 px-4 py-2 rounded-full bg-rose-700 hover:bg-rose-800 text-white text-xs font-medium tracking-wide shadow-md transition-all cursor-pointer active:scale-95"
+            >
+              Send Warmth ✨
+            </button>
+          </div>
+        </div>
+
+        <button
+          onclick="goToStage(0)"
+          class="mt-6 text-xs text-rose-100/75 hover:text-white underline underline-offset-4 transition-colors cursor-pointer"
+        >
+          Read again from the start
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       JAVASCRIPT: INTERACTIVE STORYTELLING, PARTICLE SYSTEM & HINDI ROMANTIC AUDIO
+       ========================================================================== -->
+  <script>
+    /* --------------------------------------------------------------------------
+       1. STATE & CONTENT DATA
+       -------------------------------------------------------------------------- */
+    let currentStage = 0;
+    let healedCount = 0;
+    const totalHurtCards = 4;
+    let madClicks = 0;
+    let isCelebrationMode = false;
+
+    const stageNames = [
+      'I. Ek Pal',
+      'II. Pachtawa',
+      'III. Mera Khat',
+      'IV. Guzaarish'
+    ];
+
+    // Sincere truths revealed when Tanya taps each regret card (all using respectful "aap")
+    const healedTruths = [
+      {
+        badge: 'Dil se maafi 🤍',
+        icon: '💛',
+        text: '“Main apne har kadwe lafz ke liye sharminda hoon. Aapne hamesha pyaar aur izzat deserve ki hai, mera gussa kabhi nahi.”'
+      },
+      {
+        badge: 'Respect & Care 📚',
+        icon: '🩺',
+        text: '“Raat-raat bhar jaag kar aap apna future bana rahi ho. Main aapka sahara banna chahta hoon, aapki thakan ya tension nahi.”'
+      },
+      {
+        badge: 'No Ego, Only You 🕊️',
+        icon: '🌷',
+        text: '“Meri ego aapki ek muskurahat ke saamne kuch bhi nahi. Main har baar aapse haarne ko taiyaar hoon, bas aapko nahi khona.”'
+      },
+      {
+        badge: 'Hamesha Saath 🌅',
+        icon: '✨',
+        text: '“Aapki aankhon ki nami aur yeh khamoshi mujhe tod rahi hai, Tanya. Mera dil sirf aapke paas hi sukoon paata hai.”'
+      }
+    ];
+
+    // Tender, respectful "Thoda aur manao" responses using "aap"
+    const tenderResponses = [
+      'Bilkul! Jab tak aapka gussa poora pighal na jaaye, main manata rahunga ❤️',
+      'Aap jitna chahe gussa kar lo, bas mujhse door mat jaana… aapki khamoshi mujhse bardasht nahi hoti 🥺',
+      'Ek pyaari si smile de dijiye, future Dr. Tanya ✨ Aapke bina sab adhoora sa lagta hai.',
+      'Main aapki favourite treat aur dher saari sorry ke saath ready hoon 🍫☕ Bas ab maan jaaiye na!'
+    ];
+
+    /* --------------------------------------------------------------------------
+       2. WEB AUDIO API: CRYSTAL-CLEAR, ULTRA-GENTLE MUSIC-BOX / CELESTA LULLABY
+          Pure sine fundamentals + delicate harmonic overtone, zero distortion, ~0.07 gain
+       -------------------------------------------------------------------------- */
+    let audioCtx = null;
+    let masterGain = null;
+    let musicBoxBus = null;
+    let isSoundEnabled = false;
+    let melodyTimeout = null;
+    let stepIndex = 0;
+
+    // Sweet, slow, nostalgic romantic Hindi melody ("Agar Tum Saath Ho" & "Pehla Nasha" inspired)
+    const softLullabyMelody = [
+      // Phrase 1: "Pal bhar thahar jaao, dil ye sambhal jaaye..." (Gentle C Major / F Major)
+      { f: 523.25, d: 0.75 }, // C5
+      { f: 587.33, d: 0.75 }, // D5
+      { f: 659.25, d: 1.15 }, // E5
+      { f: 587.33, d: 0.65 }, // D5
+      { f: 523.25, d: 0.75 }, // C5
+      { f: 493.88, d: 1.25 }, // B4
+      { f: 440.00, d: 1.45 }, // A4
+
+      // Phrase 2: "Kaise tumhe roka karoon..."
+      { f: 440.00, d: 0.75 }, // A4
+      { f: 493.88, d: 0.75 }, // B4
+      { f: 523.25, d: 1.15 }, // C5
+      { f: 493.88, d: 0.65 }, // B4
+      { f: 440.00, d: 0.75 }, // A4
+      { f: 392.00, d: 1.55 }, // G4
+
+      // Phrase 3: "Agar tum saath ho..."
+      { f: 523.25, d: 0.85 }, // C5
+      { f: 659.25, d: 0.85 }, // E5
+      { f: 783.99, d: 1.25 }, // G5
+      { f: 698.46, d: 0.85 }, // F5
+      { f: 659.25, d: 1.25 }, // E5
+      { f: 587.33, d: 1.55 }, // D5
+
+      // Phrase 4: "Pehla nasha, pehla khumaar..." (Sweet nostalgic resolution)
+      { f: 659.25, d: 0.80 }, // E5
+      { f: 587.33, d: 0.70 }, // D5
+      { f: 523.25, d: 0.80 }, // C5
+      { f: 587.33, d: 0.80 }, // D5
+      { f: 659.25, d: 1.10 }, // E5
+      { f: 587.33, d: 0.75 }, // D5
+      { f: 523.25, d: 2.10 }  // C5
+    ];
+
+    function initAudio() {
+      if (!audioCtx) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) {
+          audioCtx = new AudioContextClass();
+
+          // Ultra-gentle, whisper-soft master volume (~0.07 gain)
+          masterGain = audioCtx.createGain();
+          masterGain.gain.setValueAtTime(0.07, audioCtx.currentTime);
+          masterGain.connect(audioCtx.destination);
+
+          musicBoxBus = audioCtx.createGain();
+          musicBoxBus.gain.setValueAtTime(1.0, audioCtx.currentTime);
+          musicBoxBus.connect(masterGain);
+
+          // Delicate, clean echo tail for dreamy music-box warmth
+          const delay = audioCtx.createDelay();
+          delay.delayTime.setValueAtTime(0.32, audioCtx.currentTime);
+
+          const feedback = audioCtx.createGain();
+          feedback.gain.setValueAtTime(0.22, audioCtx.currentTime);
+
+          const wetGain = audioCtx.createGain();
+          wetGain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+
+          musicBoxBus.connect(delay);
+          delay.connect(feedback);
+          feedback.connect(delay);
+          delay.connect(wetGain);
+          wetGain.connect(masterGain);
+        }
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    // Pure sine fundamental + delicate octave bell overtone (zero harshness or distortion)
+    function playMusicBoxNote(freq, decayTime = 2.0, velocity = 0.85) {
+      if (!isSoundEnabled) return;
+      initAudio();
+      if (!audioCtx || !musicBoxBus) return;
+
+      try {
+        const now = audioCtx.currentTime;
+
+        // 1. Pure Sine Fundamental (Warm acoustic kalimba / music-box body)
+        const fundOsc = audioCtx.createOscillator();
+        const fundGain = audioCtx.createGain();
+        fundOsc.type = 'sine';
+        fundOsc.frequency.setValueAtTime(freq, now);
+
+        fundGain.gain.setValueAtTime(0.0001, now);
+        fundGain.gain.linearRampToValueAtTime(velocity, now + 0.015);
+        fundGain.gain.exponentialRampToValueAtTime(0.0001, now + decayTime);
+
+        fundOsc.connect(fundGain);
+        fundGain.connect(musicBoxBus);
+
+        // 2. Delicate Octave Sine Shimmer (Celesta bell sparkle, decays quickly)
+        const bellOsc = audioCtx.createOscillator();
+        const bellGain = audioCtx.createGain();
+        bellOsc.type = 'sine';
+        bellOsc.frequency.setValueAtTime(freq * 2, now);
+
+        bellGain.gain.setValueAtTime(0.0001, now);
+        bellGain.gain.linearRampToValueAtTime(velocity * 0.16, now + 0.008);
+        bellGain.gain.exponentialRampToValueAtTime(0.0001, now + Math.min(0.65, decayTime * 0.35));
+
+        bellOsc.connect(bellGain);
+        bellGain.connect(musicBoxBus);
+
+        fundOsc.start(now);
+        bellOsc.start(now);
+
+        fundOsc.stop(now + decayTime + 0.05);
+        bellOsc.stop(now + decayTime + 0.05);
+      } catch (e) {
+        // Ignore browser audio policy errors before user gesture
+      }
+    }
+
+    function scheduleNextMelodyNote() {
+      if (!isSoundEnabled) return;
+      const note = softLullabyMelody[stepIndex % softLullabyMelody.length];
+
+      playMusicBoxNote(note.f, Math.max(1.8, note.d * 2.1), 0.85);
+
+      stepIndex++;
+      melodyTimeout = setTimeout(scheduleNextMelodyNote, note.d * 1000);
+    }
+
+    function startRomanticMusic() {
+      initAudio();
+      if (!audioCtx) return;
+      isSoundEnabled = true;
+
+      const iconEl = document.getElementById('sound-icon');
+      const textEl = document.getElementById('sound-text');
+      if (iconEl) iconEl.textContent = '🎵';
+      if (textEl) textEl.textContent = 'Pause Melody';
+
+      if (!melodyTimeout) {
+        scheduleNextMelodyNote();
+      }
+    }
+
+    function stopRomanticMusic() {
+      isSoundEnabled = false;
+      const iconEl = document.getElementById('sound-icon');
+      const textEl = document.getElementById('sound-text');
+      if (iconEl) iconEl.textContent = '🎵';
+      if (textEl) textEl.textContent = 'Play Soft Melody 🎵';
+
+      if (melodyTimeout) {
+        clearTimeout(melodyTimeout);
+        melodyTimeout = null;
+      }
+    }
+
+    function toggleAudio() {
+      if (isSoundEnabled) {
+        stopRomanticMusic();
+      } else {
+        startRomanticMusic();
+      }
+    }
+
+    function playChimePhrase(frequencies, stagger = 0.18) {
+      if (!isSoundEnabled) return;
+      frequencies.forEach((f, idx) => {
+        setTimeout(() => playMusicBoxNote(f, 1.8, 0.65), idx * stagger * 1000);
+      });
+    }
+
+    // Automatically start the soft lullaby on Tanya's very first tap/click anywhere
+    function handleFirstInteraction() {
+      if (!isSoundEnabled && !audioCtx) {
+        startRomanticMusic();
+      }
+      document.removeEventListener('pointerdown', handleFirstInteraction);
+      document.removeEventListener('keydown', handleFirstInteraction);
+    }
+
+    document.addEventListener('pointerdown', handleFirstInteraction, { once: true });
+    document.addEventListener('keydown', handleFirstInteraction, { once: true });
+
+    /* --------------------------------------------------------------------------
+       3. NAVIGATION & NIGHT-TO-DAWN STAGE TRANSITIONS
+       -------------------------------------------------------------------------- */
+    function goToStage(targetStage) {
+      if (targetStage === currentStage) return;
+
+      const oldEl = document.getElementById(`stage-${currentStage}`);
+      const newEl = document.getElementById(`stage-${targetStage}`);
+      if (!oldEl || !newEl) return;
+
+      // Update body theme class for smooth night -> rose-gold -> dawn sky shift
+      document.body.classList.remove(`stage-${currentStage}`);
+      document.body.classList.add(`stage-${targetStage}`);
+
+      // Update top navigation dots & label
+      for (let i = 0; i < 4; i++) {
+        const dot = document.getElementById(`dot-${i}`);
+        if (i === targetStage) {
+          dot.className = 'w-3 h-2.5 rounded-full bg-rose-200 transition-all duration-500 scale-110';
+        } else if (i < targetStage) {
+          dot.className = 'w-2 h-2 rounded-full bg-rose-200/65 hover:bg-rose-200 transition-all duration-500';
+        } else {
+          dot.className = 'w-2 h-2 rounded-full bg-white/25 hover:bg-white/50 transition-all duration-500';
+        }
+      }
+      document.getElementById('chapter-label').textContent = stageNames[targetStage];
+
+      // Crossfade sections
+      oldEl.classList.remove('visible');
+      setTimeout(() => {
+        oldEl.classList.remove('active');
+        newEl.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            newEl.classList.add('visible');
+          });
+        });
+      }, 420);
+
+      currentStage = targetStage;
+    }
+
+    function startJourney() {
+      if (!isSoundEnabled) {
+        startRomanticMusic();
+      }
+      goToStage(1);
+    }
+
+    /* --------------------------------------------------------------------------
+       4. STAGE 1: INTERACTIVE DISSOLVE MECHANIC
+       -------------------------------------------------------------------------- */
+    function dissolveCard(cardEl, index) {
+      if (cardEl.dataset.healed === 'true') return;
+      cardEl.dataset.healed = 'true';
+
+      // Spawn golden burst particles at card's screen center
+      const rect = cardEl.getBoundingClientRect();
+      spawnBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 26, '#ffd8a8');
+
+      // Gentle music-box note in C major pentatonic scale
+      const notes = [523.25, 587.33, 659.25, 783.99];
+      playMusicBoxNote(notes[index % notes.length], 1.8, 0.7);
+
+      cardEl.classList.add('dissolving');
+
+      setTimeout(() => {
+        const truth = healedTruths[index];
+        cardEl.querySelector('.card-badge').textContent = truth.badge;
+        cardEl.querySelector('.card-badge').className =
+          'card-badge text-[11px] uppercase tracking-wider px-2.5 py-1 rounded-full bg-amber-200/20 text-amber-100 font-medium';
+        cardEl.querySelector('.card-icon').textContent = truth.icon;
+        cardEl.querySelector('.card-text').textContent = truth.text;
+
+        cardEl.classList.remove('dissolving');
+        cardEl.classList.add('healed');
+
+        healedCount++;
+        updateHealProgress();
+      }, 280);
+    }
+
+    function dissolveAllRemaining() {
+      const cards = document.querySelectorAll('#hurt-cards-grid .hurt-card');
+      cards.forEach((card, idx) => {
+        if (card.dataset.healed !== 'true') {
+          setTimeout(() => dissolveCard(card, idx), idx * 180);
+        }
+      });
+    }
+
+    function updateHealProgress() {
+      const pct = Math.round((healedCount / totalHurtCards) * 100);
+      document.getElementById('heal-progress-bar').style.width = `${pct}%`;
+      document.getElementById('heal-count').textContent = `${healedCount} / ${totalHurtCards}`;
+
+      const remaining = totalHurtCards - healedCount;
+      const statusText = document.getElementById('heal-status-text');
+      const nextBtn = document.getElementById('to-letter-btn');
+      const skipHint = document.getElementById('skip-to-letter-hint');
+
+      if (remaining > 0) {
+        statusText.textContent = `${remaining} heavy ${remaining === 1 ? 'regret' : 'regrets'} left to clear`;
+      } else {
+        statusText.textContent = 'Every truth is out from my heart, Tanya ✨';
+        nextBtn.classList.remove('opacity-50', 'pointer-events-none');
+        nextBtn.classList.add('cursor-pointer');
+        if (skipHint) skipHint.style.display = 'none';
+        playChimePhrase([523.25, 659.25, 783.99], 0.18);
+      }
+    }
+
+    /* --------------------------------------------------------------------------
+       5. STAGE 3: HEARTFELT PLEA & PROMISE FINALE
+       -------------------------------------------------------------------------- */
+    function handleStillMad() {
+      const msgEl = document.getElementById('playful-reassurance');
+      const madBtn = document.getElementById('still-mad-btn');
+      const yesBtn = document.getElementById('forgive-yes-btn');
+
+      playMusicBoxNote(440.00, 1.6, 0.6);
+
+      const message = tenderResponses[madClicks % tenderResponses.length];
+      msgEl.style.opacity = '0';
+      setTimeout(() => {
+        msgEl.textContent = message;
+        msgEl.style.opacity = '1';
+      }, 160);
+
+      madClicks++;
+
+      // Gently emphasize the forgiveness button
+      const scale = Math.min(1 + madClicks * 0.05, 1.18);
+      yesBtn.style.transform = `scale(${scale})`;
+
+      if (madClicks >= 2) {
+        madBtn.textContent = 'Thoda sa pighal rahi hoon... 🥺';
+      }
+      if (madClicks >= 4) {
+        madBtn.textContent = 'Chalo, baat karte hain ❤️';
+        madBtn.onclick = acceptApology;
+      }
+    }
+
+    function acceptApology() {
+      isCelebrationMode = true;
+      playChimePhrase([523.25, 659.25, 783.99, 1046.50], 0.16);
+
+      // Golden & rose particle celebration burst across the screen
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      spawnBurst(w * 0.5, h * 0.45, 65, '#ffd6ba');
+      setTimeout(() => spawnBurst(w * 0.3, h * 0.4, 40, '#ffafcc'), 250);
+      setTimeout(() => spawnBurst(w * 0.7, h * 0.4, 40, '#ffe5b4'), 450);
+
+      sendMoreLoveBurst();
+
+      const questionBox = document.getElementById('question-box');
+      const finaleBox = document.getElementById('finale-rx-box');
+
+      questionBox.style.opacity = '0';
+      questionBox.style.transform = 'scale(0.95)';
+
+      setTimeout(() => {
+        questionBox.classList.add('hidden');
+        finaleBox.classList.remove('hidden');
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            finaleBox.classList.remove('opacity-0', 'translate-y-6');
+          });
+        });
+      }, 500);
+    }
+
+    function sendMoreLoveBurst() {
+      playChimePhrase([659.25, 783.99, 1046.50], 0.14);
+      const emojis = ['❤️', '🤍', '✨', '🌷', '🕯️', '💛'];
+      for (let i = 0; i < 14; i++) {
+        setTimeout(() => {
+          const heart = document.createElement('div');
+          heart.className = 'floating-heart text-xl sm:text-2xl';
+          heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+          heart.style.left = `${15 + Math.random() * 70}vw`;
+          heart.style.top = `${45 + Math.random() * 35}vh`;
+          document.body.appendChild(heart);
+          setTimeout(() => heart.remove(), 2200);
+        }, i * 90);
+      }
+    }
+
+    /* --------------------------------------------------------------------------
+       6. HTML5 CANVAS: AMBIENT FIREFLIES, PETALS & INTERACTIVE BURST PARTICLES
+       -------------------------------------------------------------------------- */
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    const pointer = { x: width / 2, y: height / 2, active: false };
+    const ambientParticles = [];
+    const burstParticles = [];
+
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    window.addEventListener('mousemove', (e) => {
+      pointer.x = e.clientX;
+      pointer.y = e.clientY;
+      pointer.active = true;
+    });
+
+    window.addEventListener(
+      'touchmove',
+      (e) => {
+        if (e.touches.length > 0) {
+          pointer.x = e.touches[0].clientX;
+          pointer.y = e.touches[0].clientY;
+          pointer.active = true;
+        }
+      },
+      { passive: true }
+    );
+
+    class Firefly {
+      constructor() {
+        this.reset(true);
+      }
+
+      reset(initial = false) {
+        this.x = Math.random() * width;
+        this.y = initial ? Math.random() * height : height + 20;
+        this.size = 1.4 + Math.random() * 2.8;
+        this.speedY = -(0.18 + Math.random() * 0.45);
+        this.speedX = (Math.random() - 0.5) * 0.35;
+        this.phase = Math.random() * Math.PI * 2;
+        this.alphaBase = 0.25 + Math.random() * 0.55;
+        const hues = ['255, 218, 185', '248, 185, 175', '255, 238, 210'];
+        this.rgb = hues[Math.floor(Math.random() * hues.length)];
+      }
+
+      update() {
+        this.phase += 0.025;
+        this.y += this.speedY * (isCelebrationMode ? 1.5 : 1);
+        this.x += this.speedX + Math.sin(this.phase) * 0.22;
+
+        // Gentle magnetic drift toward user's cursor / touch
+        if (pointer.active) {
+          const dx = pointer.x - this.x;
+          const dy = pointer.y - this.y;
+          const dist = Math.hypot(dx, dy);
+          if (dist < 160 && dist > 1) {
+            this.x += (dx / dist) * 0.35;
+            this.y += (dy / dist) * 0.35;
+          }
         }
 
-        function triggerDrama() {
-            const noBtn = document.getElementById('noBtn');
-            noBtn.style.display = 'block';
-            noBtn.style.top = '80%';
-            noBtn.style.left = '50%';
-            noBtn.innerText = "Error: System Crash! 😭";
-            alert("Warning: Critical Heart Failure detected! Please don't click the negative button!");
+        if (this.y < -20 || this.x < -30 || this.x > width + 30) {
+          this.reset(false);
         }
+      }
 
-        function moveBtn() {
-            const btn = document.getElementById('noBtn');
-            btn.innerText = "Can't Click Me! 😂";
-            btn.style.left = Math.random() * (window.innerWidth - 120) + 'px';
-            btn.style.top = Math.random() * (window.innerHeight - 50) + 'px';
-        }
+      draw() {
+        const pulse = 0.65 + 0.35 * Math.sin(this.phase * 1.4);
+        const alpha = this.alphaBase * pulse;
 
-        function celebrate() {
-            confetti({ particleCount: 400, spread: 150, origin: { y: 0.6 } });
-            document.querySelector('.card').innerHTML = `
-                <div style="font-size:50px">👨‍💻❤️👩‍⚕️</div>
-                <h1>Successful Operation!</h1>
-                <p class="shayari">"तुम आए तो लगा जैसे सांस आई... <br> वरना ये दिल बस धड़क रहा था।"</p>
-                <p>I love you more than words, code, or medicine can explain. You are my forever! ♾️</p>
-            `;
+        ctx.save();
+        ctx.beginPath();
+        const gradient = ctx.createRadialGradient(
+          this.x,
+          this.y,
+          0,
+          this.x,
+          this.y,
+          this.size * 4.2
+        );
+        gradient.addColorStop(0, `rgba(${this.rgb}, ${alpha})`);
+        gradient.addColorStop(0.5, `rgba(${this.rgb}, ${alpha * 0.35})`);
+        gradient.addColorStop(1, `rgba(${this.rgb}, 0)`);
+
+        ctx.fillStyle = gradient;
+        ctx.arc(this.x, this.y, this.size * 4.2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    class BurstSpark {
+      constructor(x, y, color) {
+        this.x = x;
+        this.y = y;
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = 1.2 + Math.random() * 4.5;
+        this.vx = Math.cos(angle) * velocity;
+        this.vy = Math.sin(angle) * velocity - 0.8;
+        this.life = 1.0;
+        this.decay = 0.012 + Math.random() * 0.015;
+        this.size = 2 + Math.random() * 3;
+        this.color = color;
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.vx *= 0.97;
+        this.vy *= 0.97;
+        this.vy += 0.02;
+        this.life -= this.decay;
+      }
+
+      draw() {
+        if (this.life <= 0) return;
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, this.life);
+        ctx.fillStyle = this.color;
+        ctx.shadowBlur = 12;
+        ctx.shadowColor = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    function spawnBurst(x, y, count = 24, color = '#ffd8a8') {
+      for (let i = 0; i < count; i++) {
+        burstParticles.push(new BurstSpark(x, y, color));
+      }
+    }
+
+    function initParticles() {
+      const count = Math.min(55, Math.floor((width * height) / 18000));
+      for (let i = 0; i < count; i++) {
+        ambientParticles.push(new Firefly());
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+
+      for (let i = 0; i < ambientParticles.length; i++) {
+        ambientParticles[i].update();
+        ambientParticles[i].draw();
+      }
+
+      for (let i = burstParticles.length - 1; i >= 0; i--) {
+        burstParticles[i].update();
+        burstParticles[i].draw();
+        if (burstParticles[i].life <= 0) {
+          burstParticles.splice(i, 1);
         }
-    </script>
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    window.onload = function () {
+      resizeCanvas();
+      initParticles();
+      animate();
+    };
+  </script>
 </body>
 </html>
